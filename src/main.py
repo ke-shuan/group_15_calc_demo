@@ -125,7 +125,7 @@ class CalculatorApp(ft.Container):
     def digit_button_clicked(self, e):
         value = e.control.value
         if self.result.value == "0" or self.new_operand == True:
-            self.result.value = value
+            self.result.value = str(value)
             self.new_operand = False
         else:
             self.result.value = self.result.value + str(value)
