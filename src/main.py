@@ -29,6 +29,11 @@ class CalculatorApp(ft.Container):
                 ft.Row(
                     expand=True,
                     controls=[
+                        ActionButton(
+                            text="JMR",
+                            button_clicked=self.button_clicked,
+                            action="JMR",
+                        ),
 
                         ActionButton(
                             text="AC",
@@ -153,17 +158,29 @@ class CalculatorApp(ft.Container):
             self.result.value = "0"
             self.reset()
         elif action == "negate":
-            self.result.value = str(
-                self.format_number(
-                    -1*float(self.result.value)
+            if self.result.value == "不好笑欸":
+                self.result.value = "好笑欸"
+            elif self.result.value == "好笑欸":
+                self.result.value = "不好笑欸"
+            elif self.result.value == "你是一個一個":
+                self.result.value = "你不是一個一個"
+            elif self.result.value == "你不是一個一個":
+                self.result.value = "你是一個一個"
+            else:
+                self.result.value = str(
+                    self.format_number(
+                        -1*float(self.result.value)
+                    )
                 )
-            )
         elif action == "percent":
-            self.result.value = str(
-                self.format_number(
-                    float(self.result.value) / 100
+            if self.result.value == "不好笑欸" or self.result.value == "好笑欸":
+                self.result.value = "你是一個一個"
+            else:
+                self.result.value = str(
+                    self.format_number(
+                        float(self.result.value) / 100
+                    )
                 )
-            )
             self.reset()
         elif action == "calculate":
             self.result.value = self.format_number(
@@ -172,8 +189,16 @@ class CalculatorApp(ft.Container):
                 )
             )
             self.reset()
+        elif action == "backspace":
+            if self.result.value != "":
+                self.result.value = self.result.value[:-1]
+            else:
+                self.result.value = "0"
+        elif action == "JMR":
+            self.result.value = "不好笑欸"
         else:
             raise ValueError("Invalid action")
+        
 
     def format_number(self, num):
         if num % 1 == 0:
